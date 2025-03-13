@@ -7,7 +7,7 @@ HEALTHCHECK NONE
 USER root
 
 # renovate: datasource=npm depName=renovate versioning=semver
-ENV RENOVATE_VERSION=39.191.0
+ENV RENOVATE_VERSION=39.199.1
 
 RUN npm install --global renovate@${RENOVATE_VERSION} && \
     npm cache clean --force
@@ -16,6 +16,3 @@ RUN npm install --global renovate@${RENOVATE_VERSION} && \
 USER node
 
 WORKDIR /home/node
-
-# fix the entrypoint
-ENTRYPOINT [ "/bin/sh" ]
