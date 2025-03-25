@@ -7,7 +7,7 @@ HEALTHCHECK NONE
 USER root
 
 # renovate: datasource=npm depName=renovate versioning=semver
-ENV RENOVATE_VERSION=39.199.1
+ENV RENOVATE_VERSION=39.216.0
 
 RUN npm install --global renovate@${RENOVATE_VERSION} && \
     npm cache clean --force
