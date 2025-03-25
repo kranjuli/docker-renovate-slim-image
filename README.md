@@ -39,5 +39,5 @@ docker push ghcr.io/kranjuli/docker-renovate/renovate-slim:latest
 docker build -t renovate-slim .
 
 # run docker image "renovate-slim"
-docker run -it renovate-slim
+docker run -it renovate-slim /bin/sh
 ````
