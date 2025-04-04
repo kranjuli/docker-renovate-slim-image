@@ -37,7 +37,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghrc.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ renovate_version }}
+            ghrc.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ steps.version.outputs.renovate_version }}
           build-args: |
             BUILD_DATE=${{github.event.repository.updated_at}}
             BUILD_REV=${{github.sha}}
