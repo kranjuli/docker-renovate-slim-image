@@ -23,9 +23,13 @@ jobs:
           username: ${{ env.USER }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: 🚀 Build and push docker image
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
           push: true
-          tags: ghrc.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:$(date+%s)
+          tags: |
+            ghrc.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ github.event.repository.updated_at }}
+          build-args: |
+            BUILD_DATE=${{github.event.repository.updated_at}}
+            BUILD_REV=${{github.sha}}
