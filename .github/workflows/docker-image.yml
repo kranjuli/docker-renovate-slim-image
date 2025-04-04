@@ -20,7 +20,7 @@ jobs:
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
         id: version
         run: |
-          renovate_version=$(grep 'RENOVATE_VERSION' ./Dockerfile | cut -d'"' -f2)
+          renovate_version=$(grep 'ENV RENOVATE_VERSION' ./Dockerfile | cut -d'"' -f2)
           echo "renovate_version=$renovate_version" >> $GITHUB_OUTPUT
 
 
