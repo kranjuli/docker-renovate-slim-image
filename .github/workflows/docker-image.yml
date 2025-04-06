@@ -1,0 +1,61 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: 🏗 Extract version from dockerfile
+        if: ${{ steps.file_change.outputs.container_folder != 'false' }}
+        id: version
+        run: |
+          renovate_version=$(grep 'ENV RENOVATE_VERSION' ./Dockerfile | cut -d'=' -f2)
+          echo "renovate_version=$renovate_version" >> $GITHUB_OUTPUT
+
+      - name: 🏗 Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: 🏗 Setup Docker Buildx
+        if: ${{ steps.file_change.outputs.container_folder != 'false' }}
+        uses: docker/setup-buildx-action@v3.10.0
+
+      - name: 🏗 Cache Docker Layers
+        if: ${{ steps.file_change.outputs.container_folder != 'false' }}
+        uses: actions/cache@v4.2.2
+        with:
+          path: /tmp/.buildx-cache
+          key: renovate-slim-image
+
+      - name: 🏗 Login to GitHub Container registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🚀 Build and push docker image
+        uses: docker/build-push-action@v6.15.0
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ steps.version.outputs.renovate_version }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-ca
+          build-args: |
+            BUILD_DATE=${{github.event.repository.updated_at}}
+            BUILD_REV=${{github.sha}}
