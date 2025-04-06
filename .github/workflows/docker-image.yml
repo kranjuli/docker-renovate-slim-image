@@ -35,7 +35,7 @@ jobs:
 
       - name: 🏗 Cache Docker Layers
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
-        uses: actions/cache@v4.2.2
+        uses: actions/cache@v4.2.3
         with:
           path: /tmp/.buildx-cache
           key: renovate-slim-image
