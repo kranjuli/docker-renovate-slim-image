@@ -16,12 +16,6 @@ updates:
       interval: daily
       timezone: "Europe/Berlin"
 
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      timezone: "Europe/Berlin"
-
   - package-ecosystem: "docker"
     directory: "/"
     commit-message:
