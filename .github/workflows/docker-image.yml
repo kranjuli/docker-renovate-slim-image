@@ -27,7 +27,7 @@ jobs:
           echo "renovate_version=$renovate_version" >> $GITHUB_OUTPUT
 
       - name: 🏗 Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: 🏗 Setup Docker Buildx
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
