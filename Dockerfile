@@ -1,4 +1,4 @@
-FROM node:25-alpine
+FROM node:26-alpine
 
 # we do not need a healthcheck here
 HEALTHCHECK NONE
