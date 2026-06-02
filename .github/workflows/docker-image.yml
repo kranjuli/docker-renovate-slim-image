@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v6.0.3
 
       - name: 🏗 Extract version from dockerfile
         if: ${{ steps.file_change.outputs.container_folder != 'false' }}
